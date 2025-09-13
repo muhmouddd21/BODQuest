@@ -29,7 +29,8 @@
       "@styles/*": ["src/styles/*"],
       "@layouts/*": ["src/layouts/*"],
       "@services/*": ["src/services/*"],
-      "@validations/*": ["src/validations/*"] 
+      "@validations/*": ["src/validations/*"],
+      "@utils/*": ["src/utils/*"] 
     },
 
     /* Linting */
