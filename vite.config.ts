@@ -18,7 +18,8 @@ export default defineConfig({
       "@styles": path.resolve(__dirname, "./src/styles"),
       "@layouts": path.resolve(__dirname, "./src/layouts"),
       "@services": path.resolve(__dirname, "./src/services"),
-      "@validations": path.resolve(__dirname, "./src/Validations"),
+      "@utils": path.resolve(__dirname, "./src/utils"),
+      "@validations": path.resolve(__dirname, "./src/validations"),
       }
     
   },
