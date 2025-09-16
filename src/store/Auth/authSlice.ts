@@ -1,19 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { TLoading } from 'src/types';
+
 
 import ActAuthLogin from "./Actions/ActAuthLogin";
 import ActAuthRegister from "./Actions/ActAuthRegister";
 import ActAuthLogout from "./Actions/ActAuthLogout";
 import ActCheckAuth from "./Actions/ActCheckAuth";
+import { TLoading, TUser } from "@customtypes/index";
 
 
 interface IAuthState{
-    user:{
-        id:number,
-        email:string,
-        firstName:string,
-        lastName:string
-    } | null,
+    user: TUser| null,
     loading:TLoading
     error:string|null
     jwt:string|null

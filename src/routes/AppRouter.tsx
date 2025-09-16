@@ -1,11 +1,7 @@
-// import MainLayout from "@layouts/MainLayout/MainLayout";
-// import Error from "@pages/Error/Error";
-// import Home from "@pages/Home/Home";
-// import Login from "@pages/Login/login";
-// import Register from "@pages/Register/Register";
-// const Home = lazy(()=>import("@pages/Home"));
 import {  UserLayout } from "@layouts/index";
-import { Error,  Login, Register, UserProfile, UserSetting } from "@pages/index";
+import { Error,  Login, Logout, Register, TodoDetails, TodosDashboard, UserProfile } from "@pages/index";
+
+
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 
@@ -19,6 +15,10 @@ const router = createBrowserRouter([
     {
         path: "/register",
         element: <Register />,
+    },
+    {
+        path:"/logout",
+        element:<Logout />
     },
 
 // --- Group 2
@@ -35,9 +35,13 @@ const router = createBrowserRouter([
                 element: <UserProfile />,
             },
             {
-                path: "settings", // Renders at "/settings"
-                element: <UserSetting />,
+                path:'todos',
+                element:<TodosDashboard />
             },
+            {
+                path:'todo',
+                element: <TodoDetails />,
+            }
         ],
     },
 ]);
