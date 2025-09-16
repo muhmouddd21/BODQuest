@@ -1,10 +1,48 @@
+import Card from 'react-bootstrap/Card';
+import ListGroup from 'react-bootstrap/ListGroup';
+
+import { Mail, AtSign } from 'lucide-react'; 
+import { useAppSelector } from '@store/hooks';
 
 const UserProfile = () => {
-  return (
-    <div>
-      <p>profile</p>
-    </div>
-  )
-}
+  const {user}=useAppSelector(state => state.Authslice)
 
-export default UserProfile
+  if (!user) {
+    return <div className="text-center p-5">Please log in to view your profile.</div>;
+  }
+
+  return (
+    <Card style={{ width: '22rem' }}>
+      <Card.Body>
+        <Card.Title>User Profile</Card.Title>
+        <Card.Text>
+          This is a simple profile card showing basic user information.
+        </Card.Text>
+      </Card.Body>
+      <ListGroup className="list-group-flush">
+        <ListGroup.Item>
+          <div className="d-flex align-items-center">
+            <AtSign size={18} className="me-2 text-primary" />
+            <span className="fw-semibold me-2">Full Name:</span>
+            <span>{user.firstName} {user.lastName}</span>
+          </div>
+        </ListGroup.Item>
+        <ListGroup.Item>
+          <div className="d-flex align-items-center">
+            <Mail size={18} className="me-2 text-primary" />
+            <span className="fw-semibold me-2">Email:</span>
+            <span>{user.email}</span>
+          </div>
+        </ListGroup.Item>
+        <ListGroup.Item>
+          <div className="d-flex align-items-center">
+            <span className="fw-semibold me-2">User ID:</span>
+            <span>{user.id}</span>
+          </div>
+        </ListGroup.Item>
+      </ListGroup>
+    </Card>
+  );
+};
+
+export default UserProfile;
