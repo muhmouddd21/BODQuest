@@ -4,6 +4,8 @@ import useEditTodo from '@hooks/useEditTodo';
 
 import { TTodo } from '@customtypes/index';
 import GenericModal from '@components/common/generalModal/generalModal';
+import { useAppDispatch } from '@store/hooks';
+import { addToast } from '@store/Toast/ToastSlice';
 
 
 interface IEditTodoModalProps {
@@ -13,6 +15,7 @@ interface IEditTodoModalProps {
 }
 
 const EditTodoModal = ({ show, handleClose, todoToEdit }: IEditTodoModalProps) => {
+  const dispatch = useAppDispatch();
   const [title, setTitle] = useState('');
   const [completed, setCompleted] = useState(false);
   const { mutate, isPending, isSuccess, isError, error, reset } = useEditTodo();
@@ -39,10 +42,24 @@ const EditTodoModal = ({ show, handleClose, todoToEdit }: IEditTodoModalProps) =
 
   useEffect(() => {
     if (isSuccess) {
+      // Dispatch success toast
+      dispatch(addToast({
+        type: 'success',
+        title: 'Success',
+        message: 'Todo updated successfully!'
+      }));
       handleClose();
       reset();
     }
-  }, [isSuccess, handleClose, reset]);
+    // You can also add an error toast here
+    if (isError) {
+        dispatch(addToast({
+            type: 'danger',
+            title: 'Error',
+            message: 'Failed to update todo.'
+        }));
+    }
+  }, [isSuccess, isError, handleClose, reset, dispatch]);
 
   return (
     <GenericModal show={show} onHide={handleClose} title="Edit Todo">

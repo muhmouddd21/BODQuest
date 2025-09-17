@@ -82,8 +82,8 @@ const AuthSlice =createSlice({
         });
         builder.addCase(ActAuthLogout.fulfilled,(state)=>{
             state.loading = "succeeded";
-            logOut();
-            
+            state.jwt = null;
+            state.user = null; 
         });
         builder.addCase(ActAuthLogout.rejected,(state,action)=>{
             state.loading = "failed";
@@ -107,7 +107,7 @@ const AuthSlice =createSlice({
             })
             .addCase(ActCheckAuth.rejected, (state) => {
                 state.loading = 'failed';
-                state.isInitialized = true; // We tried, and it failed. App can now proceed.
+                state.isInitialized = true; 
 
             });
 

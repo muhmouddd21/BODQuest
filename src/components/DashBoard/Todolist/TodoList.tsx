@@ -7,6 +7,8 @@ import { useQueryClient } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import useSearch from "@hooks/useSearch";
 
+import { useAppDispatch } from "@store/hooks";
+import { addToast } from "@store/Toast/ToastSlice";
 
 import useGetTotalTodosCount from "@hooks/useGetTotalTodosCount"; 
 import { ColumnDefinition,TStatusType, TTodo  } from "@customtypes/index";
@@ -23,6 +25,7 @@ const TodosList = ({ statusFilter, searchQuery }: ITodoListProps) => {
 
     const [paginate, setPaginate] = useState(1);
     const queryClient = useQueryClient();
+    const dispatch = useAppDispatch();
 
     const { data: searchedTodos } = useSearch(searchQuery);
     const { isLoading, data: todos, error } = useGetTodos(statusFilter, paginate);
@@ -43,7 +46,7 @@ const TodosList = ({ statusFilter, searchQuery }: ITodoListProps) => {
 
     const [showConfirmModal, setShowConfirmModal] = useState(false);
     const [todoIdToDelete, setTodoIdToDelete] = useState<number | null>(null);
-    const { mutate: removeTodoMutation, isPending: isRemoving } = useRemoveTodo();
+    const { mutate: removeTodoMutation,isError:isRemoveError,isSuccess:isRemoveSuccess, isPending: isRemoving } = useRemoveTodo();
 
     const handleShowConfirmModal = (id: number) => {
         setTodoIdToDelete(id);
@@ -61,6 +64,26 @@ const TodosList = ({ statusFilter, searchQuery }: ITodoListProps) => {
             handleCloseConfirmModal();
         }
     };
+
+    //  to handle the toast logic
+    useEffect(() => {
+        if (isRemoveSuccess) {
+            dispatch(addToast({
+                type: "success",
+                title: "Success",
+                message: "Todo deleted successfully."
+            }));
+        }
+
+        if (isRemoveError) {
+            dispatch(addToast({
+                type: "danger",
+                title: "Error",
+                message: "Failed to delete todo."
+            }));
+        }
+    }, [isRemoveSuccess, isRemoveError, dispatch]);
+
 
     useEffect(() => {
         const nextPage = paginate + 1;

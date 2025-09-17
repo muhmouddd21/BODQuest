@@ -15,9 +15,6 @@ const UserProfile = () => {
     <Card style={{ width: '22rem' }}>
       <Card.Body>
         <Card.Title>User Profile</Card.Title>
-        <Card.Text>
-          This is a simple profile card showing basic user information.
-        </Card.Text>
       </Card.Body>
       <ListGroup className="list-group-flush">
         <ListGroup.Item>
@@ -32,12 +29,6 @@ const UserProfile = () => {
             <Mail size={18} className="me-2 text-primary" />
             <span className="fw-semibold me-2">Email:</span>
             <span>{user.email}</span>
-          </div>
-        </ListGroup.Item>
-        <ListGroup.Item>
-          <div className="d-flex align-items-center">
-            <span className="fw-semibold me-2">User ID:</span>
-            <span>{user.id}</span>
           </div>
         </ListGroup.Item>
       </ListGroup>
