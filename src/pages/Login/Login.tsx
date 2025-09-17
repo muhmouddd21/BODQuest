@@ -4,11 +4,12 @@ import { SubmitHandler,useForm } from 'react-hook-form';
 import { signInSchema,signInType } from '@validations/signInSchema';
 import { zodResolver } from "@hookform/resolvers/zod";
 import Input from '@components/forms/Input/Input';
-import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, Navigate, useNavigate, useSearchParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@store/hooks';
 import { useEffect } from 'react';
 import { resetUI } from '@store/Auth/authSlice';
 import ActAuthLogin from '@store/Auth/Actions/ActAuthLogin';
+import { addToast } from "@store/Toast/ToastSlice";
 
 
 
@@ -33,12 +34,24 @@ export default function Login() {
             setSearchParams("");
           }
 
-        dispatch(ActAuthLogin(data)).unwrap().then(async()=>{
+        dispatch(ActAuthLogin(data)).unwrap().then(async(response)=>{
+            dispatch(addToast({
+                type: "info", 
+                title:`Welcome Back! ${response?.user?.firstName || ""} ${response?.user?.lastName || ""}`,
+                message: "You have successfully logged in."
+            }));
           navigate('/');
         })
 
         
       }
+        useEffect(() => {
+
+        return () => {
+          dispatch(resetUI());
+        };
+      }, [dispatch, ]);
+
       useEffect(()=>{
 
         return ()=>{
@@ -106,6 +119,9 @@ export default function Login() {
               <p style={{ color: "#DC3545", marginTop: "10px" }}>{error}</p>
             )}
           </Form>
+           <div className="mt-3 text-center">
+              Don't have an account? <Link to="/register">Register</Link>
+            </div>
         </div>
       </Col>
     </Row>

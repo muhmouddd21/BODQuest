@@ -1,10 +1,11 @@
 
 import { setStore } from '@services/axios-global';
 import Authslice from "./Auth/authSlice";
+import ToastSlice from './Toast/ToastSlice';
 import { configureStore } from '@reduxjs/toolkit';
 
 export const store = configureStore({
-  reducer: { Authslice },
+  reducer: { Authslice,ToastSlice },
 });
 
 

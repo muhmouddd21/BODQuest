@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from '@store/hooks';
 
 import { useNavigate } from 'react-router-dom';
 import ActAuthRegister from '@store/Auth/Actions/ActAuthRegister';
+import { addToast } from '@store/Toast/ToastSlice';
 
 
 export default function Register() {
@@ -37,7 +38,12 @@ const submitForm:SubmitHandler<signUpType> =(data) =>{
     dispatch(ActAuthRegister({firstName, lastName, email, password}))
     .unwrap()
     .then(()=>{
-      navigate("/login?message=account_created");
+      dispatch(addToast({
+        type: "success",
+        title: "Account Created",
+        message: "Your account has been created successfully."
+      }));
+      navigate("/login");
     })
   
 }

@@ -1,4 +1,6 @@
 import useAddTodo from '@hooks/useAddTodo';
+import { useAppDispatch } from '@store/hooks';
+import { addToast } from '@store/Toast/ToastSlice';
 import { useState, useEffect } from 'react';
 import { Modal, Button, Form, InputGroup } from 'react-bootstrap';
 
@@ -10,6 +12,7 @@ interface IAddTodoModalProps {
 const AddTodoModal = ({ show, handleClose }: IAddTodoModalProps) => {
 
   const [title, setTitle] = useState('');
+   const dispatch = useAppDispatch();
 
   const { mutate, isPending, isSuccess, isError, error, reset } = useAddTodo(); 
   
@@ -26,12 +29,17 @@ const AddTodoModal = ({ show, handleClose }: IAddTodoModalProps) => {
 
   useEffect(() => {
     if (isSuccess) {
+      dispatch(addToast({
+        type: 'success',
+        title: 'Success',
+        message: 'Todo added successfully!'
+      }));
       setTitle(''); 
       handleClose(); 
       // Reset the mutation state after a successful submission
       reset(); 
     }
-  }, [isSuccess, handleClose, reset]);
+  }, [isSuccess,dispatch ,handleClose, reset]);
 
   //  reset the state when the modal is closed to handle cases where the user closes the modal without submitting
   useEffect(() => {
